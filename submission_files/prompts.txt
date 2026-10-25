@@ -1,0 +1,16 @@
+1: "create a dockerfile for my project. there is the backend root at calculator-server running on fast api and runs with uv run fastapi dev app/main.py: cd lecture-08-solution/calculator-server
+uv sync --frozen
+uv run fastapi dev app/main.py
+
+and the frontend: lecture-08-solution/calculator-react is made on react
+a docker ignore file is needed as well
+
+A docker compose is needed as well with the backend service built from the project root, running fast api on 0.0.0.0 on port 5000 published as 34242:5000
+- A bind mount ./app:/app/app for development source.
+- A database service using mysql:8.4, database appdb, application user appuser, and the classroom credentials from the lecture.
+- A named volume dbdata:/var/lib/mysql.
+- A database health check and a backend dependency with condition: service_healthy.
+- A backend environment variable DATABASE_URL using mysql+mysqlconnector://appuser:classroom-app@database:3306/appdb.
+ "
+
+2: "I dont think the frontend needs a docker, revise the docker compose accordingly" a
