@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8.4
+    container_name: calculator_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: appdb
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: classroom-app
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "54242:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-pclassroom-app"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./calculator-server
+      dockerfile: Dockerfile
+    container_name: calculator_backend
+    restart: always
+    ports:
+      - "34242:5000"
+    volumes:
+      - ./calculator-server/app:/app/app
+    environment:
+      - DATABASE_URL=mysql+mysqlconnector://appuser:classroom-app@db:3306/appdb
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  dbdata:

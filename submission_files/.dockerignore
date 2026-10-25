@@ -1,0 +1,29 @@
+# Git
+.git
+.gitignore
+
+# Python / uv
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.uv/
+dist/
+build/
+
+# Node / React
+node_modules/
+npm-debug.log*
+build/
+dist/
+
+# IDEs & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
